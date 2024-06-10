@@ -1,5 +1,6 @@
 package br.com.escola.entidade;
 
+import br.com.escola.dto.AlunoDto;
 import br.com.escola.enums.Curso;
 import br.com.escola.enums.Modalidade;
 import br.com.escola.enums.Turno;
@@ -10,22 +11,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 import java.util.UUID;
 
 @Entity
 @Table(name = "alunos")
-@AllArgsConstructor
 @NoArgsConstructor
 @Data
+@AllArgsConstructor
 public class Aluno implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
-    private int matrícula = new Random().nextInt(1000 + 1);
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime dataMatricula = LocalDateTime.now();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+  //  @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dataMatricula;
     private String nome;
     private String cpf;
     private String telefone;
@@ -33,4 +34,17 @@ public class Aluno implements Serializable {
     private Curso curso;
     private Turno turno;
     private Modalidade modalidade;
+
+    public Aluno(AlunoDto aluno) {
+        this.id = aluno.id();
+        this.dataMatricula = aluno.dataMatricula();
+        this.nome = aluno.nome();
+        this.cpf = aluno.cpf();
+        this.telefone = aluno.telefone();
+        this.email = aluno.email();
+        this.curso = aluno.curso();
+        this.turno = aluno.turno();
+        this.modalidade = aluno.modalidade();
+    }
+
 }
