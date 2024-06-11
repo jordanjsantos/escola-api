@@ -19,15 +19,15 @@ import java.util.UUID;
 @Entity
 @Table(name = "alunos")
 @NoArgsConstructor
-@Data
 @AllArgsConstructor
+@Data
 public class Aluno implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-  //  @JsonFormat(pattern = "dd/MM/yyyy")
+    //  @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataMatricula;
     private String nome;
     private String cpf;
@@ -36,6 +36,7 @@ public class Aluno implements Serializable {
     private Curso curso;
     private Turno turno;
     private Modalidade modalidade;
+
 
     public Aluno(AlunoDto aluno) {
         this.id = aluno.id();
@@ -48,5 +49,6 @@ public class Aluno implements Serializable {
         this.turno = aluno.turno();
         this.modalidade = aluno.modalidade();
     }
+
 
 }
