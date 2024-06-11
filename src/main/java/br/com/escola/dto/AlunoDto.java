@@ -16,9 +16,13 @@ public record AlunoDto(
         Long id,
         @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dataMatricula,
+        @NotBlank(message = "Não pode estar em branco")
         String nome,
+        @NotBlank(message = "Não pode estar em branco")
         String cpf,
+        @NotBlank(message = "Não pode estar em branco")
         String telefone,
+        @Email
         String email,
         @Enumerated(EnumType.STRING)
         Curso curso,
