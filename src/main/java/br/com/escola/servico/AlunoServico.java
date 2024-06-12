@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -23,12 +24,20 @@ public class AlunoServico {
 
     }
     public Aluno buscarPorId(Long id) {
-        var busca = repositorio.findById(id);
-        return busca.get();
+         Optional<Aluno> busca = repositorio.findById(id);
+        return busca.orElseThrow(NoSuchElementException::new);
 
     }
     public List<Aluno> buscarTodos() {
-
         return repositorio.findAll();
+    }
+    public Aluno atualizarAluno(AlunoDto aluno,Long id){
+        var atualizar = new Aluno(aluno);
+        atualizar.setId(id);
+        return repositorio.save(atualizar);
+    }
+    public void excluir(Long id){
+        repositorio.findById(id);
+        repositorio.deleteById(id);
     }
 }

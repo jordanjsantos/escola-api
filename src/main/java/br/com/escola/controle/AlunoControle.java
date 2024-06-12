@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("aluno")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class AlunoControle {
 
     private final AlunoServico servico;
@@ -37,5 +38,16 @@ public class AlunoControle {
         var buscar = servico.buscarTodos().stream().map(AlunoDto::new).toList();
         return ResponseEntity.ok(buscar);
 
+    }
+    @PutMapping
+    public ResponseEntity<AlunoDto>atualizarAluno(@RequestBody @Valid AlunoDto aluno,@PathVariable Long id){
+        var atualize = servico.atualizarAluno(aluno, id);
+        return ResponseEntity.ok().body(new AlunoDto(atualize));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void>excluir(@PathVariable Long id){
+        servico.excluir(id);
+        return ResponseEntity.noContent().build();
     }
 }

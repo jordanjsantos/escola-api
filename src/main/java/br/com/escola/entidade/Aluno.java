@@ -27,7 +27,6 @@ public class Aluno implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    //  @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataMatricula;
     private String nome;
     private String cpf;
@@ -49,6 +48,7 @@ public class Aluno implements Serializable {
         this.turno = aluno.turno();
         this.modalidade = aluno.modalidade();
     }
+
 
 
 }
