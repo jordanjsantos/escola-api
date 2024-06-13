@@ -14,6 +14,7 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,6 +30,7 @@ class AlunoServicoTest {
     public static final String MAIL = "carlos@gmail.com";
 
     public static final long ID = 1L;
+    public static final String ID_REFERENTE_AO_ALUNO_NAO_ENCONTRADO = "ID, referente ao aluno não encontrado ";
     @InjectMocks
     private AlunoServico alunoServico;
     @Mock
@@ -64,6 +66,16 @@ class AlunoServicoTest {
         assertEquals(Modalidade.EAD,resposta.getId());
     }
 
+    @Test
+    void quandoBuscarPorIdRetorneElementoNaoEncontrado() {
+        when(alunoRepositorio.findById(anyLong())).thenThrow(new NoSuchElementException(ID_REFERENTE_AO_ALUNO_NAO_ENCONTRADO));
+        try {
+            alunoServico.buscarPorId(ID);
+        } catch (Exception ex) {
+            assertEquals(NoSuchElementException.class, ex.getClass());
+            assertEquals(ID_REFERENTE_AO_ALUNO_NAO_ENCONTRADO,ex.getMessage());
+        }
+    }
     @Test
     void buscarTodos() {
     }

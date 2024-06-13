@@ -16,7 +16,7 @@ public class TratarErros {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<MensagemDeErro> tratarIdNaoEncontrado() {
-        var erros = new MensagemDeErro(HttpStatus.NOT_FOUND, "ID,não existe aluno");
+        var erros = new MensagemDeErro(HttpStatus.NOT_FOUND, "ID, referente ao aluno não encontrado ");
         return new ResponseEntity<>(erros,HttpStatus.NOT_FOUND);
     }
 
