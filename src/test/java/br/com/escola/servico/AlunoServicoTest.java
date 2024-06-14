@@ -14,10 +14,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -45,13 +47,28 @@ class AlunoServicoTest {
         start();
     }
     @Test
-    void cadastrarAluno() {
+    void quandoCadastrarAlunoComSucesso() {
+        when(alunoRepositorio.save(any())).thenReturn(aluno);
+        Aluno resposta = alunoServico.cadastrarAluno(alunoDto);
+        assertNotNull(resposta);
+        assertEquals(Aluno.class,resposta.getClass());
+        assertEquals(ID,resposta.getId());
+        assertEquals(LocalDate.now() , resposta.getDataMatricula());
+        assertEquals(NOME,resposta.getNome());
+        assertEquals(CPF,resposta.getCpf());
+        assertEquals(TELEFONE,resposta.getTelefone());
+        assertEquals(MAIL,resposta.getEmail());
+        assertEquals(ID,resposta.getId());
+        assertEquals(Curso.BACKEND,resposta.getCurso());
+        assertEquals(Turno.MANHA,resposta.getTurno());
+        assertEquals(Modalidade.EAD,resposta.getModalidade());
     }
 
     @Test
     void  quandoBuscarPorIdRetorneUmaInstanciaDeUsuario() {
         when(alunoRepositorio.findById(anyLong())).thenReturn(optionalAluno);
         Aluno resposta  = alunoServico.buscarPorId(ID);
+        assertNotNull(resposta);
         assertEquals(Aluno.class,resposta.getClass());
         assertNotNull(resposta);
         assertEquals(ID,resposta.getId());
@@ -63,7 +80,7 @@ class AlunoServicoTest {
         assertEquals(ID,resposta.getId());
         assertEquals(Curso.BACKEND,resposta.getCurso());
         assertEquals(Turno.MANHA,resposta.getTurno());
-        assertEquals(Modalidade.EAD,resposta.getId());
+        assertEquals(Modalidade.EAD,resposta.getModalidade());
     }
 
     @Test
