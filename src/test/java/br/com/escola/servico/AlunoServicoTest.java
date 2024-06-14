@@ -98,7 +98,22 @@ class AlunoServicoTest {
     }
 
     @Test
-    void atualizarAluno() {
+    void quandoAtualizarAlunoComSucesso() {
+        when(alunoRepositorio.save(any())).thenReturn(aluno);
+        Aluno resposta = alunoServico.atualizarAluno(alunoDto,ID);
+        assertNotNull(resposta);
+        assertEquals(Aluno.class,resposta.getClass());
+        assertEquals(ID,resposta.getId());
+        assertEquals(LocalDate.now() , resposta.getDataMatricula());
+        assertEquals(NOME,resposta.getNome());
+        assertEquals(CPF,resposta.getCpf());
+        assertEquals(TELEFONE,resposta.getTelefone());
+        assertEquals(MAIL,resposta.getEmail());
+        assertEquals(ID,resposta.getId());
+        assertEquals(Curso.BACKEND,resposta.getCurso());
+        assertEquals(Turno.MANHA,resposta.getTurno());
+        assertEquals(Modalidade.EAD,resposta.getModalidade());
+
     }
 
     @Test
