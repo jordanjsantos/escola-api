@@ -24,7 +24,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class AlunoServicoTest {
 
@@ -139,7 +139,23 @@ class AlunoServicoTest {
     }
 
     @Test
-    void excluir() {
+    void excluirComSucesso() {
+     when(alunoRepositorio.findById(anyLong())).thenReturn(optionalAluno);
+     doNothing().when(alunoRepositorio).deleteById(anyLong());
+     alunoServico.excluir(ID);
+     verify(alunoRepositorio,times(1)).deleteById(anyLong());
+    }
+
+    @Test
+    void excluirQuandoIdNaoForEncontrado(){
+        when(alunoRepositorio.findById(anyLong())).thenThrow(new NoSuchElementException(ID_REFERENTE_AO_ALUNO_NAO_ENCONTRADO));
+        try{
+            alunoServico.excluir(ID);
+        }catch (Exception ex){
+            assertEquals(NoSuchElementException.class,ex.getClass());
+            assertEquals(ID_REFERENTE_AO_ALUNO_NAO_ENCONTRADO,ex.getMessage());
+
+        }
 
     }
    private void start(){
