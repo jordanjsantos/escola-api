@@ -1,6 +1,5 @@
 package br.com.escola.controle;
 
-
 import br.com.escola.dto.AlunoDto;
 import br.com.escola.servico.AlunoServico;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,7 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("aluno")
+@RequestMapping("alunos")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class AlunoControle {
@@ -45,6 +43,7 @@ public class AlunoControle {
         var busca = servico.buscarPorId(id);
         return ResponseEntity.ok(new AlunoDto(busca));
     }
+
     @GetMapping
     @Operation(summary = "Rota responsável pela busca de todos os alunos")
     @ApiResponse(responseCode = "200",description = " sucesso",content = {
@@ -53,8 +52,8 @@ public class AlunoControle {
     public ResponseEntity<List<AlunoDto>> buscarTodos() {
         var buscar = servico.buscarTodos().stream().map(AlunoDto::new).toList();
         return ResponseEntity.ok(buscar);
-
     }
+
     @PutMapping
     @Operation(summary = "Rota responsável por atualizar o aluno pelo id")
     @ApiResponse(responseCode = "200",description = " sucesso",content = {
@@ -74,4 +73,5 @@ public class AlunoControle {
         servico.excluir(id);
         return ResponseEntity.noContent().build();
     }
+
 }

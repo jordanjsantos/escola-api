@@ -11,8 +11,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Random;
 
 public record AlunoDto(
         Long id,
@@ -32,6 +30,7 @@ public record AlunoDto(
         Turno turno,
         @Enumerated(EnumType.STRING)
         Modalidade modalidade) {
+
     public AlunoDto(Aluno cadastroMatricula) {
         this(
                 cadastroMatricula.getId(),
@@ -44,4 +43,5 @@ public record AlunoDto(
                 cadastroMatricula.getTurno(),
                 cadastroMatricula.getModalidade());
     }
+
 }
